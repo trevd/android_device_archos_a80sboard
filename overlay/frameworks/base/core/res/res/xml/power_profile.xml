@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+**
+** Copyright 2009, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License")
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<device name="Android">
+  <!-- All values are in mA except as noted -->
+  <item name="none">0</item>
+  <item name="screen.on">426</item>
+  <item name="screen.full">558</item>
+  <!-- bluetooth, on, not doing anything. -->
+  <item name="bluetooth.on">1</item>
+  <!-- bluetooth, on, transmitting -->
+  <item name="bluetooth.active">7.3</item>
+  <!-- bluetooth, on, driver gets AT cmd. here: scanning for devices -->
+  <item name="bluetooth.at">157.8</item>
+  <!-- wifi, connected, not doing anything. -->
+  <item name="wifi.on">30</item>
+  <!-- wifi, transmitting -->
+  <item name="wifi.active">227</item>
+  <!-- wifi, scanning for networks -->
+  <item name="wifi.scan">297</item>
+  <!-- audio here: just guessed-->
+  <item name="dsp.audio">30</item>
+  <!-- video here: just guessed-->
+  <item name="dsp.video">30</item>
+  <!-- 3G plugged, enabled, connected -->
+  <item name="radio.on">223</item>
+  <!-- 3G plugged, enabled, transmitting -->
+  <item name="radio.active">388</item>
+  <!-- 3G plugged, enabled, scanning for networks -->
+  <item name="radio.scanning">323</item>
+  <!-- GPS, locating -->
+  <item name="gps.on">69</item>
+  <!-- Different CPU speeds as reported in
+       /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state -->
+  <array name="cpu.speeds">
+      <!-- normal is OMAP4430, turbo is OMAP4460 -->
+      <value>300000</value> <!-- 300 MHz CPU speed -->
+      <value>350000</value> <!-- 350 MHz CPU speed, turbo -->
+      <value>600000</value> <!-- 600 MHz CPU speed -->
+      <value>700000</value> <!-- 700 MHz CPU speed, turbo -->
+      <value>800000</value> <!-- 800 MHz CPU speed -->
+      <value>920000</value> <!-- 920 MHz CPU speed, turbo -->
+      <value>1008000</value> <!-- 1 GHz CPU speed -->
+      <value>1200000</value> <!-- 1.2 GHz CPU speed, normal and turbo -->
+      <value>1500000</value> <!-- 1.5 GHz CPU speed, turbo -->
+  </array>
+  <!-- Power consumption when CPU is idle -->
+  <item name="cpu.idle">44</item>
+  <!-- Power consumption at different speeds -->
+  <array name="cpu.active">
+      <value>134</value>
+      <value>109</value>
+      <value>113</value>
+      <value>143</value>
+      <value>108</value>
+      <value>90</value>
+      <value>152</value>
+      <value>140</value>
+      <value>326</value>
+  </array>
+  <!-- This is the battery capacity in mAh -->
+  <item name="battery.capacity">5750</item>
+</device>
