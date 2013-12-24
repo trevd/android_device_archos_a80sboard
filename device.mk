@@ -39,6 +39,8 @@ PRODUCT_COPY_FILES += \
 	device/archos/a80sboard/cypress-tma340.idc:system/usr/idc/cypress-tma340.idc
 
 PRODUCT_COPY_FILES += \
+	device/archos/a80sboard/twl6030_pwrbutton.kcm:system/usr/keychars/twl6030_pwrbutton.kcm \
+	device/archos/a80sboard/gpio-keys.kcm:system/usr/keychars/gpio-keys.kcm \
 	device/archos/a80sboard/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/archos/a80sboard/twl6030_pwrbutton.kl:system/usr/keylayout/twl6030_pwrbutton.kl
 
@@ -52,6 +54,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
 	frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
+	frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
 	frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
 	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
