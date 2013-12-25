@@ -95,14 +95,16 @@ include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 DEVICE_PACKAGE_OVERLAYS := \
     device/archos/a80sboard/overlay
 
-# Generic audio libs
 PRODUCT_PACKAGES += \
+	libtiaudioutils \
 	libbaudioroute \
 	libaudio-resampler \
+	audio_policy.omap4 \
+	audio.primary.omap4 \
+	audio.hdmi.omap4 \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
-
 
 
 
@@ -128,8 +130,12 @@ PRODUCT_PACKAGES += \
 	
 $(call inherit-product, device/archos/a80sboard/properties.mk)
 
-$(call inherit-product-if-exists, hardware/ti/omap4xxx-archos/omap4.mk)
 $(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
+
+$(call inherit-product-if-exists, hardware/ti/omap4xxx-archos/omap4.mk)
+$(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
+
+
 
 
 # Limit the language to english
