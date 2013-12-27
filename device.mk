@@ -54,7 +54,6 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.sensor.light.xml:system/etc/permissions/android.hardware.sensor.light.xml \
 	frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
 	frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
-	frameworks/native/data/etc/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
 	frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
 	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
@@ -85,7 +84,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_CHARACTERISTICS := nosdcard,tablet
     
 # The SGS series is hdpi however with new development going toward xhdpi we need to inherit xhdpi or we will lose those pngs
-PRODUCT_AAPT_CONFIG := large mdpi hdpi xhdpi nodpi
+PRODUCT_AAPT_CONFIG := large mdpi hdpi xhdpi nodpi tvdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 # use phone-hdpi-512-dalvik-heap.mk as the device only has

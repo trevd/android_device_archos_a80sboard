@@ -11,13 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-ifeq ($(TARGET_BOARD_PLATFORM),omap4)
-ifeq ($(TARGET_BOARD_PLATFORM_VARIANT),a80sboard)
+ifeq ($(TARGET_DEVICE),a80sboard)
+
 LOCAL_PATH := $(call my-dir)
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE := power.$(TARGET_BOARD_PLATFORM)
+LOCAL_MODULE := power.omap4
 LOCAL_MODULE_PATH := $(TARGET_OUT_SHARED_LIBRARIES)/hw
 LOCAL_SRC_FILES := power.c
 LOCAL_SHARED_LIBRARIES := liblog
@@ -25,5 +25,5 @@ LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
 
-endif # ifeq ($(TARGET_BOARD_PLATFORM_VARIANT),a80sboard)
-endif # ifeq ($(TARGET_BOARD_PLATFORM),omap4)
+
+endif
