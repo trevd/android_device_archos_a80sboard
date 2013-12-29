@@ -4,7 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES := mkbootimg.c
 
-LOCAL_MODULE := mkbootimg-archos
+LOCAL_MODULE := mkbootimg-a80sboard
 
 LOCAL_CFLAGS := -Wno-maybe-uninitialized
 
