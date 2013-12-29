@@ -14,6 +14,8 @@
 # limitations under the License.
 #
 
+TARGET_PREBUILT_KERNEL := device/archos/a80sboard/kernel
+
 ifeq ($(TARGET_PREBUILT_KERNEL),)
 	LOCAL_KERNEL := device/archos/a80sboard/kernel
 else
