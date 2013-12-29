@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base.mk)
+$(call inherit-product, device/archos/a80sboard/full_base.mk)
 $(call inherit-product, device/archos/a80sboard/device.mk)
 
 PRODUCT_NAME := full_a80sboard

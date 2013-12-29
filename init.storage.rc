@@ -28,7 +28,7 @@ on fs
 	mount_all /fstab.archosa80sboard
 	swapon_all /fstab.archosa80sboard
 		
-	setprop ro.crypto.fuse_sdcard true
+	#tprop ro.crypto.fuse_sdcard true
 
 # internal sdcard 
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated

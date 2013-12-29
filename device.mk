@@ -81,7 +81,7 @@ PRODUCT_COPY_FILES += \
 
     
 # Set product characteristic to tablet, needed for some ui elements
-PRODUCT_CHARACTERISTICS := nosdcard,tablet
+PRODUCT_CHARACTERISTICS := tablet
     
 # The SGS series is hdpi however with new development going toward xhdpi we need to inherit xhdpi or we will lose those pngs
 PRODUCT_AAPT_CONFIG := large mdpi hdpi xhdpi nodpi tvdpi
@@ -105,7 +105,8 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	audio.r_submix.default \
 
-
+PRODUCT_PACKAGES += \
+	mkbootimg-a80sboard
 
 # WI-Fi
 PRODUCT_PACKAGES += \
@@ -125,17 +126,21 @@ PRODUCT_PACKAGES += \
 # Cyanogenmod Imports 
 PRODUCT_PACKAGES += \
 	CMFileManager \
+	Superuser \
 	su \
-	
-$(call inherit-product, device/archos/a80sboard/properties.mk)
 
+# Linaro Imports
+PRODUCT_PACKAGES += \
+	PCKeyboard \
+	ZeroXBenchmark \
+	AndroidTerm
+
+$(call inherit-product, device/archos/a80sboard/properties.mk)
+$(call inherit-product, device/archos/a80sboard/tests.mk)
 $(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
 
 $(call inherit-product-if-exists, hardware/ti/omap4xxx-archos/omap4.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
-
-
-
 
 # Limit the language to english
 PRODUCT_LOCALES := en_GB en_US 

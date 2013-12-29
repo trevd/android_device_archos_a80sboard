@@ -92,13 +92,75 @@ on boot
     chown system system /sys/bus/i2c/drivers/hmc5843/4-001e
     chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/enable
     chown system system /sys/bus/i2c/drivers/hmc5843/4-001e/rate
+    
+# change permissions for overlay managers and display devices
+    chown system system /sys/devices/platform/omapdss/display0/enabled
+    chown system system /sys/devices/platform/omapdss/display1/enabled
+    chown system system /sys/devices/platform/omapdss/display1/hpd_enabled
+    chown system system /sys/devices/platform/omapdss/display2/enabled
+    chown system system /sys/devices/platform/omapdss/display3/enabled
+    chown system system /sys/devices/platform/omapdss/display0/name
+    chown system system /sys/devices/platform/omapdss/display1/name
+    chown system system /sys/devices/platform/omapdss/display2/name
+    chown system system /sys/devices/platform/omapdss/display3/name
+    chown system system /sys/devices/platform/omapdss/overlay0/manager
+    chown system system /sys/devices/platform/omapdss/overlay1/manager
+    chown system system /sys/devices/platform/omapdss/overlay2/manager
+    chown system system /sys/devices/platform/omapdss/overlay3/manager
+    chown system system /sys/devices/platform/omapdss/overlay0/zorder
+    chown system system /sys/devices/platform/omapdss/overlay1/zorder
+    chown system system /sys/devices/platform/omapdss/overlay2/zorder
+    chown system system /sys/devices/platform/omapdss/overlay3/zorder
 
+    #change permissions on overlay1, 2 and 3 for hdmi setup
+    chown system system /sys/devices/platform/omapdss/overlay1/position
+    chown system system /sys/devices/platform/omapdss/overlay1/input_size
+    chown system system /sys/devices/platform/omapdss/overlay1/output_size
+    chown system system /sys/devices/platform/omapdss/overlay2/position
+    chown system system /sys/devices/platform/omapdss/overlay2/input_size
+    chown system system /sys/devices/platform/omapdss/overlay2/output_size
+    chown system system /sys/devices/platform/omapdss/overlay3/position
+    chown system system /sys/devices/platform/omapdss/overlay3/input_size
+    chown system system /sys/devices/platform/omapdss/overlay3/output_size
 
+    # change permissions for manager tranparency parameters
+    chown system system /sys/devices/platform/omapdss/manager0/name
+    chown system system /sys/devices/platform/omapdss/manager0/display
+    chown system system /sys/devices/platform/omapdss/manager1/name
+    chown system system /sys/devices/platform/omapdss/manager1/display
+    chown system system /sys/devices/platform/omapdss/manager2/name
+    chown system system /sys/devices/platform/omapdss/manager2/display
+    chown system system /sys/devices/platform/omapdss/overlay0/enabled
+    chown system system /sys/devices/platform/omapdss/overlay1/enabled
+    chown system system /sys/devices/platform/omapdss/overlay2/enabled
+    chown system system /sys/devices/platform/omapdss/overlay3/enabled
 
-# change permissions for S3D hardware
-    chown system system /sys/devices/platform/omapdss/display0/s3d_enable
+    # change permissions for display timings to get the resolutions
+    chown system system /sys/devices/platform/omapdss/display0/timings
+    chown system system /sys/devices/platform/omapdss/display1/timings
+    chown system system /sys/devices/platform/omapdss/display2/timings
+    chown system system /sys/devices/platform/omapdss/display3/timings
+
+    # change permissions for overlay setting
+    chown system system /sys/module/omapdss/parameters/overscan_percent
+
+    # change permissions for s3d parameters (let hwc write)
     chown system system /sys/devices/platform/omapdss/display1/s3d_enable
     chown system system /sys/devices/platform/omapdss/display1/s3d_type
+	
+#setup the hdmi interface
+    # Enable hotplug detection for HDMI
+    write /sys/devices/platform/omapdss/display1/hpd_enabled 1
+
+
+# Change permissions for FB overlays for HDMI UI Cloning
+    chown system system /sys/class/graphics/fb0/overlays
+    chown system system /sys/class/graphics/fb0/fit_to_screen
+    chown system system /sys/class/graphics/fb1/overlays
+
+# Disable GPS
+    write /sys/devices/platform/nl5550.0/gps_nshutdown/value 0
+
 
 # Change permissions on the governor (this is for debug only)
     chmod 444 /proc/cmdline
@@ -283,9 +345,12 @@ service create_nvs /system/bin/logwrapper /system/xbin/create_nvs -t /system/etc
     oneshot
 
 # GPS services
-service navl_server /system/bin/navd --android_log NAVD  -p3 -nav\"-c/system/etc/gps/config/pathconfigfile.txt\"
+service navl_server /system/bin/start_navd -android_log NAVD -nav\"-c/system/etc/gps/config/pathconfigfile.txt\"a
     user root
+    class main
+    disabled
     oneshot
+   
 
 service akmd /system/bin/akmd8975 -m 6
     class core

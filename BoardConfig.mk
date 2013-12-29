@@ -34,27 +34,32 @@ TARGET_BOARD_INFO_FILE := device/archos/a80sboard/board-info.txt
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
-#TARGET_RECOVERY_FSTAB = device/archos/a80sboard/recovery.fstab
+
+# custom updater functonality for handling the archos device layout
+TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_a80sboard
+
 TARGET_RECOVERY_FSTAB = device/archos/a80sboard/fstab.archosa80sboard
+
+# This is the size of /mnt/rawfs/custom which holds 
+# the SDE Kernel and Ramdisk
+BOARD_BOOTIMAGE_PARTITION_SIZE := 8379728
+
+# Use a custom mkbootimg to create an archos friendly file
+BOARD_CUSTOM_MKBOOTIMG := $(HOST_OUT_EXECUTABLES)/mkbootimg-a80sboard$(HOST_EXECUTABLE_SUFFIX)
+BOARD_MKBOOTIMG_ARGS := --image_size $(BOARD_BOOTIMAGE_PARTITION_SIZE)
 
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
 
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 536870912
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 736870912
 BOARD_FLASH_BLOCK_SIZE := 4096
-
-BOARD_KERNEL_BASE := 0x08000000
-BOARD_KERNEL_PAGESIZE := 2048
 
 BOARD_USES_ALSA_AUDIO := true
 BOARD_USE_LEGACY_UI := true
 
 BOARD_EGL_CFG := device/archos/a80sboard/egl.cfg
 
-# This is implemented since kernel 3.10.0 
 USE_OPENGL_RENDERER := true
-
-WITH_DEXPREOPT := true
 
 # Connectivity - Wi-Fi
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
