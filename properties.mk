@@ -31,9 +31,10 @@ PRODUCT_TAGS += dalvik.gc.type-precise
 
 # Dalvik vm
 PRODUCT_PROPERTY_OVERRIDES += \
-	dalvik.vm.execution-mode=int:fast \
-	ro.kernel.android.checkjni=false \
-	dalvik.vm.checkjni=false \
+    dalvik.vm.execution-mode=int:fast \
+    ro.kernel.android.checkjni=false \
+    dalvik.vm.checkjni=false \
+    dalvik.vm.heapsize=256m
 
 # wifi settings
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -42,7 +43,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     
 # Tablet Mode
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.sf.lcd_density=160
+    ro.sf.lcd_density=160
 
 # LowRam Settings for 512MB
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -51,14 +52,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	
 # OpenGLES 3.0 Magic Number
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.opengles.version=196608 \
-	browser.tioptimization=true \
-	com.ti.omap_enhancement=true \
-	com.ti.omap_enhancement_s3d=true \
-	com.ti.blueti_enhancement=true \
-	com.ti.ant_ble_wbs_switch=true \
-	com.ti.wbs_enabled=false \
-	tv.hdmi.uicloning.enable=true \
+    ro.opengles.version=196608 \
+    browser.tioptimization=true \
+    com.ti.omap_enhancement=true \
+    com.ti.omap_enhancement_s3d=true \
+    com.ti.blueti_enhancement=true \
+    com.ti.ant_ble_wbs_switch=true \
+    com.ti.wbs_enabled=false \
+    tv.hdmi.uicloning.enable=true \
+    ro.bq.gpu_to_cpu_unsupported=1
 
 
 # relax the security 
