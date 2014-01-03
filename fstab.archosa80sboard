@@ -7,6 +7,5 @@
 /dev/block/mmcblk0p2        						/system		ext4	rw	defaults        
 /dev/block/mmcblk0p3        						/cache		ext4	defaults	defaults        
 /dev/block/mmcblk0p5        						/data		ext4	defaults	defaults       
-/dev/block/mmcblk0p1				        		/mnt/rawfs	rawfs	defaults	defaults        
 /dev/block/mmcblk0p6 									none 		swap 	defaults	defaults
 /devices/platform/omap/omap_hsmmc.0/mmc_host/mmc1	auto		vfat	defaults	voldmanaged=sdcard1:auto
