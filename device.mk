@@ -86,7 +86,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/archos/a80sboard/gps.conf:system/etc/gps.conf
 
-    
+SUPERUSER_EMBEDDED := true
+SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
+
 # Set product characteristic to tablet, needed for some ui elements
 PRODUCT_CHARACTERISTICS := tablet
     
