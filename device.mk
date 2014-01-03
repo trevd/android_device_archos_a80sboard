@@ -27,12 +27,13 @@ PRODUCT_COPY_FILES += \
 	$(LOCAL_KERNEL):kernel
 
 PRODUCT_COPY_FILES += \
-	device/archos/a80sboard/init.storage.rc:root/init.storage.rc \
-	device/archos/a80sboard/init.archosa80sboard.usb.rc:root/init.archosa80sboard.usb.rc \
-	device/archos/a80sboard/init.archosa80sboard.rc:root/init.archosa80sboard.rc \
-	device/archos/a80sboard/init.recovery.archosa80sboard.rc:root/init.recovery.archosa80sboard.rc \
-	device/archos/a80sboard/fstab.archosa80sboard:root/fstab.archosa80sboard \
-	device/archos/a80sboard/ueventd.archosa80sboard.rc:root/ueventd.archosa80sboard.rc \
+    device/archos/a80sboard/init.storage.rc:root/init.storage.rc \
+    device/archos/a80sboard/init.superuser.rc:root/init.superuser.rc \
+    device/archos/a80sboard/init.archosa80sboard.usb.rc:root/init.archosa80sboard.usb.rc \
+    device/archos/a80sboard/init.archosa80sboard.rc:root/init.archosa80sboard.rc \
+    device/archos/a80sboard/init.recovery.archosa80sboard.rc:root/init.recovery.archosa80sboard.rc \
+    device/archos/a80sboard/fstab.archosa80sboard:root/fstab.archosa80sboard \
+    device/archos/a80sboard/ueventd.archosa80sboard.rc:root/ueventd.archosa80sboard.rc \
 
 
 # Prebuilt input device calibration files
@@ -80,6 +81,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	device/archos/a80sboard/media_codecs.xml:system/etc/media_codecs.xml \
 	device/archos/a80sboard/media_profiles.xml:system/etc/media_profiles.xml
+
+# GPS configuration
+PRODUCT_COPY_FILES += \
+    device/archos/a80sboard/gps.conf:system/etc/gps.conf
 
     
 # Set product characteristic to tablet, needed for some ui elements
