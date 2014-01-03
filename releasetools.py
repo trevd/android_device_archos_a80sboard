@@ -25,6 +25,10 @@ def FullOTA_InstallBegin(info):
 								(p.fs_type, common.PARTITION_TYPES[p.fs_type],
 									p.device, p.mount_point))
 
+def IncrementalOTA_InstallEnd(info):
+  # Remove any recovery related entries
+  info.script.script = [cmd for cmd in info.script.script if not "recovery" in cmd]
+
 def FullOTA_InstallEnd(info):
   # Remove any recovery related entries
   info.script.script = [cmd for cmd in info.script.script if not "recovery" in cmd]
