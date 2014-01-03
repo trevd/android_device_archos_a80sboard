@@ -17,8 +17,21 @@
 
 import common
 import os
+def FullOTA_InstallBegin(info):
+	fstab = info.info_dict["fstab"]
+	if fstab:
+		p = fstab["/system"]
+		info.script.AppendExtra('archos.mount_and_wipe("%s", "%s", "%s", "%s");' %
+								(p.fs_type, common.PARTITION_TYPES[p.fs_type],
+									p.device, p.mount_point))
 
 def FullOTA_InstallEnd(info):
+  # Remove any recovery related entries
+  info.script.script = [cmd for cmd in info.script.script if not "recovery" in cmd]
+  # Remove the in built format command
+  info.script.script = [cmd for cmd in info.script.script if not "format(" in cmd]
+  # Remove the in built mount command
+  info.script.script = [cmd for cmd in info.script.script if not "mount(" in cmd]
   # Remove writing boot.img from script (we do it in updater.sh)
   info.script.script = [cmd for cmd in info.script.script if not "boot.img" in cmd]
   info.script.AppendExtra('archos.write_sde_image("boot.img");')

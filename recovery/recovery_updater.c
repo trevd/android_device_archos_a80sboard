@@ -31,6 +31,9 @@ struct MountedVolume {
     const char *flags;
 };
 
+extern Value* MountFn(const char* name, State* state, int argc, Expr* argv[]) ; 
+extern Value* IsMountedFn(const char* name, State* state, int argc, Expr* argv[]);
+extern Value* DeleteFn(const char* name, State* state, int argc, Expr* argv[]) ;
 #define MOUNT_LOCATION "/dev/block/mmcblk0p1"
 #define RAWFS_MOUNT_POINT "/rawfs"
 #define RAWFS_CUSTOM_FILENAME RAWFS_MOUNT_POINT"/custom"
@@ -59,7 +62,74 @@ static inline int mount_rawfs(){
 	printf("mounted: %s @ %s\n",MOUNT_LOCATION, RAWFS_MOUNT_POINT);
 	return 0 ; 
 }
+// mount(fs_type, partition_type, location, mount_point)
+Value* MountAndWipeFn(const char* name, State* state, int argc, Expr* argv[]) {
+	
+	printf("MountAndWipeFn is called\n"); 
+	    char* result = NULL;
+    if (argc != 4) {
+        return ErrorAbort(state, "%s() expects 4 args, got %d", name, argc);
+    }
+	char* fs_type;
+	char* partition_type;
+	char* location;
+	char* mount_point;
+	if (ReadArgs(state, argv, 4, &fs_type, &partition_type,
+				 &location, &mount_point) < 0) {
+		return NULL;
+	}
+	    if (strlen(fs_type) == 0) {
+        ErrorAbort(state, "fs_type argument to %s() can't be empty", name);
+        goto done;
+    }
+    if (strlen(partition_type) == 0) {
+        ErrorAbort(state, "partition_type argument to %s() can't be empty",
+                   name);
+        goto done;
+    }
+    if (strlen(location) == 0) {
+        ErrorAbort(state, "location argument to %s() can't be empty", name);
+        goto done;
+    }
+    if (strlen(mount_point) == 0) {
+        ErrorAbort(state, "mount_point argument to %s() can't be empty", name);
+        goto done;
+    }
 
+    char *secontext = NULL;
+
+    if (sehandle) {
+        selabel_lookup(sehandle, &secontext, mount_point, 0755);
+        setfscreatecon(secontext);
+    }
+	
+	Expr* ismounted_argv[] = { argv[3] }; //  mount_point
+	Value* ismountedfn = IsMountedFn("is_mounted",state,1, ismounted_argv );
+	Value* mountfn = NULL ;  
+	printf("MountAndWipeFn :IsMountedFn is called\n"); 
+	if((ismountedfn != NULL) && (strlen(ismountedfn->data) == 0)){
+		mountfn = MountFn("mount",state,argc,argv); 
+		printf("MountAndWipeFn :MountFn is called\n"); 
+		if((mountfn == NULL) || (strlen(mountfn->data) == 0)){
+			ErrorAbort(state,"Failed to mount %s\n",mount_point);
+			goto done2;
+		}
+		
+	}
+	result = mount_point;
+   Value* deletefn  = DeleteFn("delete_recursive",state,1, ismounted_argv );
+	
+done2: 
+	if(mountfn)free(mountfn);
+	if(ismountedfn)free(ismountedfn);
+done:
+
+    free(fs_type);
+    free(partition_type);
+    free(location);
+    if (result != mount_point) free(mount_point);
+    return StringValue(result);
+}	
 
 // write_sde_image(sde_boot_image)
 Value* WriteSDEImageFn(const char* name, State* state, int argc, Expr* argv[]) {
@@ -153,6 +223,7 @@ done:
 }
 
 void Register_librecovery_updater_a80sboard() {
-    printf("Register_librecovery_updater_a80sboard is called\n");
-    RegisterFunction("archos.write_sde_image", WriteSDEImageFn);
+	printf("Register_librecovery_updater_a80sboard is called\n");
+	RegisterFunction("archos.mount_and_wipe", MountAndWipeFn);
+	RegisterFunction("archos.write_sde_image", WriteSDEImageFn);
 }
