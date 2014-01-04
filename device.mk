@@ -95,10 +95,6 @@ PRODUCT_CHARACTERISTICS := tablet
 PRODUCT_AAPT_CONFIG := large mdpi hdpi xhdpi nodpi tvdpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
-# use phone-hdpi-512-dalvik-heap.mk as the device only has
-# 512MB of RAM
-include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
-
 DEVICE_PACKAGE_OVERLAYS := \
     device/archos/a80sboard/overlay
 
