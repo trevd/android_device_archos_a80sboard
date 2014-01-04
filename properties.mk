@@ -29,12 +29,17 @@
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
 
+# Dalvik Heap Sizes
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.heapstartsize=5m \
+    dalvik.vm.heapgrowthlimit=48m \
+    dalvik.vm.heapsize=256m
+
 # Dalvik vm
 PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.execution-mode=int:fast \
     ro.kernel.android.checkjni=false \
     dalvik.vm.checkjni=false \
-    dalvik.vm.heapsize=256m
 
 # wifi settings
 PRODUCT_PROPERTY_OVERRIDES += \
