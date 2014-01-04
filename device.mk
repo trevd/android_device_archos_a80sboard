@@ -109,8 +109,10 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	audio.r_submix.default \
 
+# otatools
 PRODUCT_PACKAGES += \
-	mkbootimg-a80sboard
+    libparted_static \
+    mkbootimg-a80sboard
 
 # WI-Fi
 PRODUCT_PACKAGES += \
