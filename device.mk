@@ -81,10 +81,6 @@ PRODUCT_COPY_FILES += \
 	device/archos/a80sboard/media_codecs.xml:system/etc/media_codecs.xml \
 	device/archos/a80sboard/media_profiles.xml:system/etc/media_profiles.xml
 
-# GPS configuration
-PRODUCT_COPY_FILES += \
-    device/archos/a80sboard/gps.conf:system/etc/gps.conf
-
 SUPERUSER_EMBEDDED := true
 SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
 
