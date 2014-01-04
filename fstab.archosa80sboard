@@ -2,10 +2,13 @@
 #<src>                                                  <mnt_point>	        <type>	    <mnt_flags and options> 	<fs_mgr_flags>
 # The filesystem that contains the filesystem checker binary (typically /system) cannot
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
-/dev/block/null										/boot				emmc	defaults  recoveryonly
-/dev/block/null										/recovery			emmc	defaults  recoveryonly
-/dev/block/mmcblk0p2        						/system		ext4	rw	defaults        
-/dev/block/mmcblk0p3        						/cache		ext4	defaults	defaults        
-/dev/block/mmcblk0p5        						/data		ext4	defaults	defaults       
-/dev/block/mmcblk0p6 									none 		swap 	defaults	defaults
-/devices/platform/omap/omap_hsmmc.0/mmc_host/mmc1	auto		vfat	defaults	voldmanaged=sdcard1:auto
+/dev/block/null             /boot           emmc    defaults        recoveryonly
+/dev/block/null             /recovery       emmc    defaults        recoveryonly
+/dev/block/mmcblk0p2        /system         ext4    rw              defaults
+/dev/block/mmcblk0p3        /cache          ext4    defaults        defaults
+/dev/block/mmcblk0p5        /data           ext4    defaults        defaults
+/dev/block/mmcblk0p6        none            swap    defaults        swapprio=0
+
+
+/devices/platform/omap/omap_hsmmc.0/mmc_host/mmc1                   auto        vfat        defaults        voldmanaged=sdcard1:auto
+/devices/platform/omap/musb-omap2430/musb-hdrc/usb2/2-1/2-1:1.0     auto        auto        defaults        voldmanaged=usbdisk:auto
