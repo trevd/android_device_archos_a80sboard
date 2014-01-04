@@ -40,19 +40,21 @@ TARGET_RECOVERY_UPDATER_LIBS := librecovery_updater_a80sboard
 
 TARGET_RECOVERY_FSTAB = device/archos/a80sboard/fstab.archosa80sboard
 
-# This is the size of /mnt/rawfs/custom which holds 
-# the SDE Kernel and Ramdisk
+# This is the size of /mnt/rawfs/custom which holds the SDE Kernel and Ramdisk
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8379728
 
 # Use a custom mkbootimg to create an archos friendly file
 BOARD_CUSTOM_MKBOOTIMG := $(HOST_OUT_EXECUTABLES)/mkbootimg-a80sboard$(HOST_EXECUTABLE_SUFFIX)
-#BOARD_MKBOOTIMG_ARGS := --image_size $(BOARD_BOOTIMAGE_PARTITION_SIZE)
 
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_SPARSE_EXT_DISABLED := true
-
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 736870912
+# System Partition is 800MB ( 838860800 bytes )
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 838860800
 BOARD_FLASH_BLOCK_SIZE := 4096
+
+
+# Cache Partition is 400MB (419430400 bytes)
+BOARD_CACHEIMAGE_PARTITION_SIZE := 419430400
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
 
 BOARD_USES_ALSA_AUDIO := true
 BOARD_USE_LEGACY_UI := true
