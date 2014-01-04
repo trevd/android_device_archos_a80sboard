@@ -4,9 +4,9 @@
 # specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
 /dev/block/null             /boot           emmc    defaults        recoveryonly
 /dev/block/null             /recovery       emmc    defaults        recoveryonly
-/dev/block/mmcblk0p2        /system         ext4    rw              defaults
-/dev/block/mmcblk0p3        /cache          ext4    defaults        defaults
-/dev/block/mmcblk0p5        /data           ext4    defaults        defaults
+/dev/block/mmcblk0p2        /system         ext4    rw,barrier=1    wait
+/dev/block/mmcblk0p3        /cache          ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check
+/dev/block/mmcblk0p5        /data           ext4    noatime,nosuid,nodev,barrier=1,data=ordered,nomblk_io_submit,noauto_da_alloc,errors=panic wait,check
 /dev/block/mmcblk0p6        none            swap    defaults        swapprio=0
 
 
