@@ -17,9 +17,6 @@ on init
     #symlink /storage/emulated/legacy /storage/sdcard0
     #symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
-   # Rawfs for access to device data
-	mkdir /mnt/rawfs 0770 root system
-	
 	
 on fs
 
