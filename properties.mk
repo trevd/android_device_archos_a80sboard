@@ -65,7 +65,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     com.ti.ant_ble_wbs_switch=true \
     com.ti.wbs_enabled=false \
     tv.hdmi.uicloning.enable=true \
-    ro.bq.gpu_to_cpu_unsupported=1
+    ro.bq.gpu_to_cpu_unsupported=1 \
+    ro.board.has_gps=yes \
 
 
 # relax the security 
