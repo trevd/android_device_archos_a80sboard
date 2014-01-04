@@ -28,7 +28,6 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_COPY_FILES += \
     device/archos/a80sboard/init.storage.rc:root/init.storage.rc \
-    device/archos/a80sboard/init.superuser.rc:root/init.superuser.rc \
     device/archos/a80sboard/init.archosa80sboard.usb.rc:root/init.archosa80sboard.usb.rc \
     device/archos/a80sboard/init.archosa80sboard.rc:root/init.archosa80sboard.rc \
     device/archos/a80sboard/init.recovery.archosa80sboard.rc:root/init.recovery.archosa80sboard.rc \
