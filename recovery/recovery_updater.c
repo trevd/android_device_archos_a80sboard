@@ -62,7 +62,10 @@ static inline int mount_rawfs(){
 	printf("mounted: %s @ %s\n",MOUNT_LOCATION, RAWFS_MOUNT_POINT);
 	return 0 ; 
 }
-// mount(fs_type, partition_type, location, mount_point)
+// MountAndWipeFn(fs_type, partition_type, location, mount_point)
+// archos.mount_and_wipe replaces the default format and mount commands
+// We mount the selected partiton then perfoming a recursive delete.
+// This is instead of formatting the partition.
 Value* MountAndWipeFn(const char* name, State* state, int argc, Expr* argv[]) {
 	
 	printf("MountAndWipeFn is called\n"); 
@@ -132,6 +135,8 @@ done:
 }	
 
 // write_sde_image(sde_boot_image)
+// Write the archos sde image to the custom file located in the rawfs partition
+// This is /dev/block/mmcblk0p1 which is normally mounted at /mnt/rawfs
 Value* WriteSDEImageFn(const char* name, State* state, int argc, Expr* argv[]) {
 
    printf("WriteSDEImageFn is called\n"); 
@@ -221,9 +226,27 @@ done:
 	 free(sdeImage);
     return StringValue(strdup(success > 0 ? "t" : ""));
 }
+// write_sde_image(sde_boot_image)
+// Write the archos sde image to the custom file located in the rawfs partition
+// This is /dev/block/mmcblk0p1 which is normally mounted at /mnt/rawfs
+Value* CheckPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
 
+   printf("CheckPartitionsFn is called\n"); 
+	char* blkdevice;
+	 struct stat blkdevice_stat;
+    int success = 0;
+
+    if (argc != 1)
+        return ErrorAbort(state, "%s() expects 1 arg, got %d", name, argc);
+
+    if (ReadArgs(state, argv, 1, &blkdevice) != 0)
+        return NULL;
+        
+    return StringValue(strdup(success > 0 ? "t" : ""));
+}
 void Register_librecovery_updater_a80sboard() {
-	printf("Register_librecovery_updater_a80sboard is called\n");
-	RegisterFunction("archos.mount_and_wipe", MountAndWipeFn);
-	RegisterFunction("archos.write_sde_image", WriteSDEImageFn);
+    printf("Register_librecovery_updater_a80sboard is called\n");
+    RegisterFunction("archos.mount_and_wipe", MountAndWipeFn);
+    RegisterFunction("archos.write_sde_image", WriteSDEImageFn);
+    RegisterFunction("archos.check_partitions", CheckPartitionsFn);
 }
