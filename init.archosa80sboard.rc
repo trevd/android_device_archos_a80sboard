@@ -37,6 +37,13 @@ on boot
 	chmod 0777 /dev/tiler
 	chmod 0777 /dev/dmm
 
+# Archos 3G Stick - Full Size USB Port 
+    chmod root radio /sys/class/rfkill/rfkill0/state
+    chmod 0664  /sys/class/rfkill/rfkill0/state
+    chown root radio /sys/bus/usb/devices/usb1/power/control
+    chmod 0664 /sys/bus/usb/devices/usb1/power/control
+    write /sys/bus/usb/devices/usb1/power/control on
+
 # cpufreq interactive governor: timer 20ms, min sample 20ms, hispeed 800MHz
 	write /sys/devices/system/cpu/cpufreq/interactive/timer_rate 20000
 	write /sys/devices/system/cpu/cpufreq/interactive/min_sample_time 20000
@@ -174,7 +181,7 @@ on post-fs-data
 	mkdir /data/local 0771 shell shell
 	
 	mkdir /data/misc/dhcp 0770 dhcp dhcp
-
+   copy /system/etc/wifi/hostapd.conf /data/misc/wifi/hostapd.conf
 
 # wi-fi
 	insmod /system/lib/modules/compat.ko
@@ -191,14 +198,12 @@ on post-fs-data
 	insmod /system/lib/modules/bnep.ko
 	insmod /system/lib/modules/tty_hci.ko
 
-
+# 3G Usb Dongle 
+    kdir /data/misc/ppp 0770 system radio
 	
-	copy /system/etc/wifi/hostapd.conf /data/misc/wifi/hostapd.conf
-
+	
 
     # change permissions for Bluetooth/FM/GPS
-	chmod 0666 /sys/class/rfkill/rfkill0/state
-   chown bluetooth net_bt_admin /sys/class/rfkill/rfkill0/state
    chmod 0666 /dev/ttyO1
    chown bluetooth bluetooth /dev/ttyO1
 
@@ -215,16 +220,15 @@ on post-fs-data
 
 	mkdir /data/misc/eth 0770 eth wifi
 
-	# camera calibration - DCC folder permission
-	mkdir /data/misc/camera 0770 media media
+    # camera calibration - DCC folder permission
+    mkdir /data/misc/camera 0770 media media
     chown media media /data/misc/camera
     mkdir /data/misc/camera/R5_MVEN003_LD2_ND0_IR0_SH0_FL1_SVEN003_DCCID1044 0770 media media
     chown media media /data/misc/camera/R12_MVEN001_LD1_ND0_IR0_SH0_FL0_SVEN001_DCCID43
     chown media media /data/misc/camera/R12_MVEN002_LD2_ND0_IR0_SH0_FL0_SVEN002_DCCID42
     chown media media /data/misc/camera/R8_MVEN002_LD2_ND0_IR0_SH0_FL1_SVEN003_DCCID1042
 
-	mkdir /data/radio 0775 radio radio
-	mkdir /data/radio/log 0775 radio radio
+     
 
 #for Bluetooth HID
 	chmod 0666 /dev/uhid
@@ -365,3 +369,19 @@ on property:init.svc.bootanim=running
 	write /sys/class/leds/lcd-backlight/brightness 150 
 
 
+service pppd_datakey /system/bin/logwrapper /system/etc/ppp/init_pppd_datakey
+    user root
+    group radio cache inet misc audio log
+    disabled
+    oneshot
+
+service pppd_secrets /system/bin/logwrapper /system/bin/pppd_secrets
+    user radio
+    group radio cache inet misc audio log
+    disabled
+    oneshot
+    
+service usbms /system/bin/logwrapper /system/bin/usb_modeswitch -c /etc/1bbb_f000
+    user root
+    disabled
+    oneshot

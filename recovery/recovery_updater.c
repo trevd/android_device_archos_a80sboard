@@ -19,6 +19,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <parted/parted.h>
 #include "minzip/Zip.h"
 #include "updater/updater.h"
 #include "mtdutils/mounts.h"
@@ -34,6 +35,7 @@ struct MountedVolume {
 extern Value* MountFn(const char* name, State* state, int argc, Expr* argv[]) ; 
 extern Value* IsMountedFn(const char* name, State* state, int argc, Expr* argv[]);
 extern Value* DeleteFn(const char* name, State* state, int argc, Expr* argv[]) ;
+
 #define MOUNT_LOCATION "/dev/block/mmcblk0p1"
 #define RAWFS_MOUNT_POINT "/rawfs"
 #define RAWFS_CUSTOM_FILENAME RAWFS_MOUNT_POINT"/custom"

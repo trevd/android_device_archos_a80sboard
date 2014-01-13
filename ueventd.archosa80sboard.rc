@@ -48,6 +48,8 @@
 # for 3G keys
 /dev/ttyUSB*              0660   root       radio
 /dev/ttyHS*               0660   root       radio
+/dev/bus/usb/001/*          0664   root       usb
+/dev/bus/usb/002/*          0664   root       usb
 
 # for HWC
 /dev/omaplfb              0660   system     system

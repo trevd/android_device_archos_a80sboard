@@ -27,7 +27,9 @@
     <!-- This device allows sms service. -->
     <bool name="config_sms_capable">true</bool>
 
-
+    <!-- The default iface on which to monitor data use -->
+    <string name="config_datause_iface" translatable="false">ppp0</string>
+    
 	 <!-- Separate software navigation bar required on this device. -->
 	<bool name="config_showNavigationBar">true</bool>
 	
@@ -76,7 +78,7 @@
          USB interfaces.  If the device doesn't want to support tething over USB this should
          be empty.  An example would be "usb.*" -->
     <string-array translatable="false" name="config_tether_usb_regexs">
-        <item>"rndis0"</item>
+        <item>"rndis\\d"</item>
     </string-array>
 
     <!-- Array of allowable ConnectivityManager network types for tethering -->
@@ -91,7 +93,7 @@
          Wifi interfaces.  If the device doesn't want to support tethering over Wifi this
          should be empty.  An example would be "softap.*" -->
     <string-array translatable="false" name="config_tether_wifi_regexs">
-        <item>"wlan0"</item>
+        <item>"wlan\\d"</item>
     </string-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
