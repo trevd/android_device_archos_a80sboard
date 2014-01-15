@@ -51,8 +51,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=160
 
 # LowRam Settings for 512MB
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.config.low_ram=true \
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	ro.config.low_ram=true \
 	
 	
 # OpenGLES 3.0 Magic Number
@@ -67,6 +67,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     tv.hdmi.uicloning.enable=true \
     ro.bq.gpu_to_cpu_unsupported=1 \
     ro.board.has_gps=yes \
+    
+PRODUCT_PROPERTY_OVERRIDES += \
+    telephony.lteOnCdmaDevice=0
 
 
 # relax the security 
