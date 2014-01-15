@@ -127,15 +127,20 @@ PRODUCT_PACKAGES += \
 	
 # Cyanogenmod Imports 
 PRODUCT_PACKAGES += \
-	CMFileManager \
-	Superuser \
-	su \
+    CMFileManager \
+    Superuser \
+    su \
+    libncurses \
+    bash \
 
 # Linaro Imports
 PRODUCT_PACKAGES += \
 	PCKeyboard \
 	ZeroXBenchmark \
 	AndroidTerm
+
+# Just for fun
+PRODUCT_PACKAGES += sl
 
 $(call inherit-product, device/archos/a80sboard/properties.mk)
 $(call inherit-product, device/archos/a80sboard/tests.mk)
