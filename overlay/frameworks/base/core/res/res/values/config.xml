@@ -48,14 +48,14 @@
          does not require auto-restore. -->
     <!-- the 6th element indicates boot-time dependency-met value. -->
    <string-array translatable="false" name="networkAttributes">
-        <item>"wifi,1,1,2,-1,true"</item>
-        <item>"mobile,0,0,1,-1,true"</item>
+        <item>"wifi,1,1,1,-1,true"</item>
+        <item>"mobile,0,0,0,-1,true"</item>
         <item>"mobile_mms,2,0,2,60000,true"</item>
         <item>"mobile_supl,3,0,2,60000,true"</item>
-        <item>"mobile_dun,4,0,5,60000,true"</item>
+        <item>"mobile_dun,4,0,2,60000,true"</item>
         <item>"mobile_hipri,5,0,3,60000,true"</item>
-        <item>"bluetooth,7,7,0,-1,true"</item>
-        <item>"ethernet,9,9,9,-1,true"</item>
+        <item>"bluetooth,7,7,2,-1,true"</item>
+        <item>"ethernet,9,0,1,-1,true"</item>
         <item>"mobile_fota,10,0,2,60000,true"</item>
         <item>"mobile_ims,11,0,2,-1,true"</item>
         <item>"mobile_cbs,12,0,2,60000,true"</item>
@@ -87,6 +87,7 @@
         <item>1</item>
         <item>5</item>
         <item>7</item>
+        <item>9</item>
     </integer-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
@@ -103,6 +104,10 @@
         <item>"bnep\\d"</item>
 	</string-array>
 
+
+    <!-- Boolean indicating if restoring network selection should be skipped -->
+    <!-- The restoring is handled by modem if it is true -->
+    <bool translatable="false" name="skip_restoring_network_selection">true</bool>
 
 	<!-- Device configuration setting the minfree tunable in the lowmemorykiller in the kernel. 
 		  A high value will cause the lowmemorykiller to fire earlier, keeping more memory in the
@@ -178,7 +183,7 @@
     <!-- Whether safe headphone volume is enabled or not (country specific). -->
     <bool name="config_safe_media_volume_enabled">false</bool>
 
-
+    <bool name="config_enableWifiDisplay">true</bool>
   <!-- Location Product Overlay -->
   
   
