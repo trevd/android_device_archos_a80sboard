@@ -32,16 +32,13 @@ $(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
 # Get a list of languages.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 
-#$(shell echo "$(PRODUCT_PACKAGES)")
-
-EXCLUE_PRODUCT_PACKAGES := \
+# The PRODUCT_PACKAGES_FILTER is implemented by 
+# vendor/archos/build/tasks/filter-packages.mk
+# Add the packages you want to remove from the build list
+PRODUCT_PACKAGES_FILTER := \
         LatinIME \
         OpenWnn \
         PinyinIME \
         libWnnEngDic \
         libWnnJpnDic \
         libwnndict
-
-PRODUCT_PACKAGES := $(filter-out $(EXCLUE_PRODUCT_PACKAGES), $(PRODUCT_PACKAGES))
-
-#$(shell echo "$(PRODUCT_PACKAGES)")
