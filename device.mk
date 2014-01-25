@@ -112,13 +112,14 @@ PRODUCT_PACKAGES += \
 
 # WI-Fi
 PRODUCT_PACKAGES += \
-	dhcpcd.conf \
-	hostapd.conf \
-	lib_driver_cmd_wl12xx \
-	wpa_supplicant.conf \
-	wpa_supplicant \
-	hostapd
-	
+    dhcpcd.conf \
+    hostapd.conf \
+    libwpa_client \
+    lib_driver_cmd_wl12xx \
+    wpa_supplicant.conf \
+    wpa_supplicant \
+    hostapd
+
 	
 # Device specific hal implementation
 PRODUCT_PACKAGES += \
