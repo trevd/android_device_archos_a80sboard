@@ -13,11 +13,35 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-$(call inherit-product, device/archos/a80sboard/full_base.mk)
-$(call inherit-product, device/archos/a80sboard/device.mk)
+# Get the long list of APNs
+PRODUCT_COPY_FILES := device/sample/etc/apns-full-conf.xml:system/etc/apns-conf.xml
+
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
 
 PRODUCT_NAME := full_a80sboard
 PRODUCT_DEVICE := a80sboard
 PRODUCT_BRAND := Android
-PRODUCT_MODEL := a80sboard
-PRODUCT_MANUFACTURER := archos
+PRODUCT_MODEL := AOSP on a80sboard
+PRODUCT_MANUFACTURER := Archos
+
+$(call inherit-product, device/archos/a80sboard/device.mk)
+$(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
+
+
+# Get a list of languages.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
+
+#$(shell echo "$(PRODUCT_PACKAGES)")
+
+EXCLUE_PRODUCT_PACKAGES := \
+        LatinIME \
+        OpenWnn \
+        PinyinIME \
+        libWnnEngDic \
+        libWnnJpnDic \
+        libwnndict
+
+PRODUCT_PACKAGES := $(filter-out $(EXCLUE_PRODUCT_PACKAGES), $(PRODUCT_PACKAGES))
+
+#$(shell echo "$(PRODUCT_PACKAGES)")

@@ -143,11 +143,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += sl
 
 $(call inherit-product, device/archos/a80sboard/properties.mk)
-$(call inherit-product, device/archos/a80sboard/tests.mk)
-$(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
 
 $(call inherit-product-if-exists, hardware/ti/omap4xxx-archos/omap4.mk)
 $(call inherit-product-if-exists, hardware/ti/wpan/ti-wpan-products.mk)
-
-# Limit the language to english
-PRODUCT_LOCALES := en_GB en_US 
