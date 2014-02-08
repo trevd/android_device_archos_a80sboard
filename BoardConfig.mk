@@ -85,7 +85,16 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TW_BRIGHTNESS_PATH := /sys/devices/platform/omap_pwm_led.0/leds/lcd-backlight/brightness
 TW_MAX_BRIGHTNESS := 254
 
+# CWM Based Recoveries
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# This is implemented in kernel 3.10.0 
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+
 # Limit the language to english
 PRODUCT_LOCALES := en_GB en_US
 
 TARGET_RELEASETOOLS_EXTENSIONS := device/archos/a80sboard/
+
+# Use product specific BoardConfig 
+-include device/archos/a80sboard/BoardConfigProduct.mk

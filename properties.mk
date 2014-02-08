@@ -51,8 +51,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=160
 
 # LowRam Settings for 512MB
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	ro.config.low_ram=true \
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.config.low_ram=true \
 	
 	
 # OpenGLES 3.0 Magic Number
@@ -71,6 +71,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     telephony.lteOnCdmaDevice=0
 
+PRODUCT_PROPERTY_OVERRIDES := \
+	hwui.render_dirty_regions=false
 
 # relax the security 
 ADDITIONAL_DEFAULT_PROPERTIES += \
