@@ -1,5 +1,5 @@
 #
-# Copyright 2013 The Android Open Source Project
+# Copyright 2013 The Android Open-Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +13,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+$(call inherit-product, device/archos/a80sboard/full_a80sboard.mk)
+# Inherit some common cyanogenmod stuff.
+$(call inherit-product-if-exists, vendor/cm/config/common_full_tablet_wifionly.mk)
 
-add_lunch_combo aosp_a80sboard-userdebug
-add_lunch_combo omni_a80sboard-userdebug
-add_lunch_combo cm_a80sboard-userdebug
+TARGET_SCREEN_WIDTH := 768
+TARGET_SCREEN_HEIGHT := 1024
+
+DEVICE_PACKAGE_OVERLAYS += device/archos/a80sboard/overlay/cm
+
+PRODUCT_NAME := cm_a80sboard
+
+#PRODUCT_PACKAGES += Launcher3
+
