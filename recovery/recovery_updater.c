@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2011 The Android Open Source Project
  *
@@ -22,7 +23,7 @@
 #include <parted/parted.h>
 #include "minzip/Zip.h"
 #include "updater/updater.h"
-#include "mtdutils/mounts.h"
+#include "mounts.h"
 #include "edify/expr.h"
 
 struct MountedVolume {
@@ -37,11 +38,12 @@ extern Value* IsMountedFn(const char* name, State* state, int argc, Expr* argv[]
 extern Value* DeleteFn(const char* name, State* state, int argc, Expr* argv[]) ;
 
 #define MOUNT_LOCATION "/dev/block/mmcblk0p1"
+#define LAST_MOUNT_LOCATION "/dev/block/mmcblk0p6"
 #define RAWFS_MOUNT_POINT "/rawfs"
 #define RAWFS_CUSTOM_FILENAME RAWFS_MOUNT_POINT"/custom"
 
 static inline int return_error(char* message) {
-	printf(message);
+	printf("%s",message);
 	return -1 ;
 }
 
@@ -231,7 +233,7 @@ done:
 // write_sde_image(sde_boot_image)
 // Write the archos sde image to the custom file located in the rawfs partition
 // This is /dev/block/mmcblk0p1 which is normally mounted at /mnt/rawfs
-Value* CheckPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
+Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
 
    printf("CheckPartitionsFn is called\n"); 
 	char* blkdevice;
@@ -244,11 +246,22 @@ Value* CheckPartitionsFn(const char* name, State* state, int argc, Expr* argv[])
     if (ReadArgs(state, argv, 1, &blkdevice) != 0)
         return NULL;
         
+     
+    // Check if we need to setup the new partition layout
+	if (stat( LAST_MOUNT_LOCATION , &blkdevice_stat) != -1) {
+		 printf("New Partition Layout Found");
+		success =1 ;
+		goto done;
+	
+	}
+done:
+
     return StringValue(strdup(success > 0 ? "t" : ""));
+
 }
 void Register_librecovery_updater_a80sboard() {
     printf("Register_librecovery_updater_a80sboard is called\n");
     RegisterFunction("archos.mount_and_wipe", MountAndWipeFn);
     RegisterFunction("archos.write_sde_image", WriteSDEImageFn);
-    RegisterFunction("archos.check_partitions", CheckPartitionsFn);
+    RegisterFunction("archos.setup_partitions", SetupPartitionsFn);
 }

@@ -4,6 +4,7 @@ include $(CLEAR_VARS)
 
 LOCAL_MODULE_TAGS := eng
 LOCAL_C_INCLUDES += bootable/recovery \
+					bootable/recovery/mtdutils \
                     external/libparted/include
 
 LOCAL_SRC_FILES := recovery_updater.c
