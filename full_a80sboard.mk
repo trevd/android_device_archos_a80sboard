@@ -35,8 +35,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 # The PRODUCT_PACKAGES_FILTER is implemented by 
 # vendor/archos/build/tasks/filter-packages.mk
 # Add the packages you want to remove from the build list
-PRODUCT_PACKAGES_FILTER := \
-        LatinIME \
+PACKAGES.LatinIME.OVERRIDES := \
         OpenWnn \
         PinyinIME \
         libWnnEngDic \

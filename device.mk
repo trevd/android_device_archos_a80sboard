@@ -108,7 +108,7 @@ PRODUCT_PACKAGES += \
 # otatools
 PRODUCT_PACKAGES += \
     libparted_static \
-    mkbootimg-a80sboard
+    mkbootimg-archos
 
 # WI-Fi
 PRODUCT_PACKAGES += \
