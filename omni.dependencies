@@ -46,11 +46,5 @@
     "repository":  "android_hardware_ti_wlan",
     "target_path": "hardware/ti/wlan",
     "revision":    "master"
-  },
-  {
-    "remote":      "omnirom",
-    "repository":  "android_kernel_htc_m7",
-    "target_path": "kernel/htc/m7",
-    "revision":    "android-4.3"
   }
 ]
