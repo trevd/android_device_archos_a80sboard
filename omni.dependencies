@@ -1,0 +1,56 @@
+[
+  {
+    "remote":      "trevd",
+    "repository":  "android_vendor_archos",
+    "target_path": "vendor/archos",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_vendor_ti_a80sboard",
+    "target_path": "vendor/ti/a80sboard",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_vendor_imgtec_a80sboard",
+    "target_path": "vendor/imgtec/a80sboard",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_hardware_ti_omap4xxx-archos",
+    "target_path": "hardware/ti/omap4xxx-archos",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_hardware_ril_libarchos_ril",
+    "target_path": "hardware/ril/archos_ril",
+    "revision":    "kitat"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_hardware_ti_domx",
+    "target_path": "hardware/ti/domx",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_hardware_ti_wpan",
+    "target_path": "hardware/ti/wpan",
+    "revision":    "master"
+  },
+  {
+    "remote":      "trevd",
+    "repository":  "android_hardware_ti_wlan",
+    "target_path": "hardware/ti/wlan",
+    "revision":    "master"
+  },
+  {
+    "remote":      "omnirom",
+    "repository":  "android_kernel_htc_m7",
+    "target_path": "kernel/htc/m7",
+    "revision":    "android-4.3"
+  }
+]
