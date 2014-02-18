@@ -27,7 +27,7 @@
     "remote":      "trevd",
     "repository":  "android_hardware_ril_libarchos_ril",
     "target_path": "hardware/ril/archos_ril",
-    "revision":    "kitat"
+    "revision":    "kitkat"
   },
   {
     "remote":      "trevd",
