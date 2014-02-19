@@ -18,6 +18,9 @@ LOCAL_PATH:= $(call my-dir)
 # hw/<COPYPIX_HARDWARE_MODULE_ID>.<ro.board.platform>.so
 include $(CLEAR_VARS)
 
+LOCAL_CLANG :=  true
+LOCAL_CFLAGS := -Wno-unused-parameter
+
 LOCAL_SRC_FILES := lights.c
 
 LOCAL_PRELINK_MODULE := false
