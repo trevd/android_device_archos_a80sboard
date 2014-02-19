@@ -13,9 +13,9 @@ on init
     
 # Support legacy paths
     symlink /storage/emulated/legacy /sdcard
-    #symlink /storage/emulated/legacy /mnt/sdcard
-    #symlink /storage/emulated/legacy /storage/sdcard0
-    #symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
 
 	
 on fs
@@ -26,6 +26,16 @@ on fs
 	swapon_all /fstab.archosa80sboard
 		
 	#tprop ro.crypto.fuse_sdcard true
+
+on post-fs-data
+    # play fast and loose with security
+    mount rootfs rootfs / rw remount
+    
+    
+on boot    
+	# play fast and loose with security 2
+    mount ext4 /system rw remount
+    
 
 # internal sdcard 
 service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
