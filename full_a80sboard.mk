@@ -32,25 +32,6 @@ $(call inherit-product-if-exists, vendor/archos/a80sboard/device-vendor.mk)
 # Get a list of languages.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_small.mk)
 
-# The PRODUCT_PACKAGES_FILTER is implemented by 
-# vendor/archos/build/core/definitions.mk
-# Add the packages you want to remove from the build list
-PRODUCT_PACKAGES_FILTER := \
-        OpenWnn \
-        PinyinIME \
-        com.android.inputmethod.pinyin.lib \
-        libjni_pinyinime \
-        libWnnEngDic \
-        libWnnJpnDic \
-        libwnndict \
-		VisualizationWallpapers \
-		MagicSmokeWallpapers \
-		PhaseBeam \
-		Galaxy4 \
-		NoiseField \
-		HoloSpiralWallpaper \
-		LiveWallpapersPicker \
-		LiveWallpapers \
 
         
 

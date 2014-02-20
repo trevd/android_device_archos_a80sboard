@@ -46,5 +46,23 @@
     "repository":  "android_hardware_ti_wlan",
     "target_path": "hardware/ti/wlan",
     "revision":    "master"
+  },
+  {
+    "remote":      "CyanogenMod",
+    "repository":  "Superuser",
+    "target_path": "external/koush/Superuser",
+    "revision":    "cm-11.0"
+  },
+    {
+    "remote":      "CyanogenMod",
+    "repository":  "Widgets",
+    "target_path": "external/koush/Widgets",
+    "revision":    "cm-11.0"
+  },
+  {
+    "remote":      "CyanogenMod",
+    "repository":  "android_packages_apps_CMFileManager",
+    "target_path": "packages/apps/CMFileManager",
+    "revision":    "cm-11.0"
   }
 ]

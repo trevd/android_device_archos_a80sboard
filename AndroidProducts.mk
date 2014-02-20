@@ -19,3 +19,24 @@ PRODUCT_MAKEFILES := \
 	$(LOCAL_DIR)/full_a80sboard.mk \
 	$(LOCAL_DIR)/aosp_a80sboard.mk \
 	$(LOCAL_DIR)/omni_a80sboard.mk
+	
+# The PRODUCT_PACKAGES_FILTER is implemented by 
+# vendor/archos/build/core/definitions.mk
+# Add the packages you want to remove from the build list
+PRODUCT_PACKAGES_FILTER := \
+        OpenWnn \
+        PinyinIME \
+        com.android.inputmethod.pinyin.lib \
+        libjni_pinyinime \
+        libWnnEngDic \
+        libWnnJpnDic \
+        libwnndict \
+		VisualizationWallpapers \
+		MagicSmokeWallpapers \
+		PhaseBeam \
+		Galaxy4 \
+		NoiseField \
+		HoloSpiralWallpaper \
+		LiveWallpapersPicker \
+		LiveWallpapers \
+		OpenDelta
