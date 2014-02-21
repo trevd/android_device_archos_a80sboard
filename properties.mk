@@ -82,5 +82,5 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
     ro.secure=0 \
     service.adb.root=1 \
-    persist.sys.root_access=3 \
+    persist.sys.root_access=3
 endif
