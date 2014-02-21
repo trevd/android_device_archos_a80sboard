@@ -74,10 +74,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	hwui.render_dirty_regions=false
 
-# relax the security 
+ifeq ($(TARGET_BUILD_TYPE),debug)
+# relax the security only if the target type is debug. 
+# Note this is set as release if lunch is used for target selection
+# TUse buildspec.mk to override the TARGET_BUILD_TYPE setting
 ADDITIONAL_DEFAULT_PROPERTIES += \
     ro.adb.secure=0 \
     ro.secure=0 \
     service.adb.root=1 \
     persist.sys.root_access=3 \
-	
+endif
