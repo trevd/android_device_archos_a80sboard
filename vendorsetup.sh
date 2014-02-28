@@ -40,7 +40,9 @@ function print_build_spec_menu()
 }
 function select_build_spec()
 {
-    rm $PWD/buildspec.mk
+    if [ -f $PWD/buildspec.mk ] ; then 
+		rm $PWD/buildspec.mk
+	fi
     local answer
     BUILD_SPEC_CHOICES=`find $PWD/device/*/*/buildspecs -mindepth 1 -maxdepth 1 -type f -iname "buildspec.mk.*" `
 	test -z ${BUILD_SPEC_CHOICES[0]}  && return 1
@@ -76,16 +78,15 @@ function select_build_spec()
     fi
 	echo
     fixup_common_out_dir
+	local spec_product=`grep  "^TARGET_PRODUCT.*:=.*" $PWD/buildspec.mk | cut -d= -f2 | sed 's/ //g'`
 
     set_stuff_for_environment
-    printconfig
+    printconfig spec_product
+    echo $spec_product
+    build/tools/roomservice.py $spec_product
     echo
 }
-
-#\					-exec sh -c "grep -oH \"^TARGET_PRODUCT.*:=.*\" {} |  sed 's/TARGET_PRODUCT.*:=//g' " \;`
-
-
-select_build_spec					
+#select_build_spec					
 
 add_lunch_combo aosp_a80sboard-userdebug
 add_lunch_combo omni_a80sboard-userdebug
