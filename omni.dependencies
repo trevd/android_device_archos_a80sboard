@@ -64,5 +64,11 @@
     "repository":  "android_packages_apps_CMFileManager",
     "target_path": "packages/apps/CMFileManager",
     "revision":    "cm-11.0"
+  },
+  {
+    "remote":      "linaro",
+    "repository":  "platform/packages/inputmethods/hackerskeyboard",
+    "target_path": "packages/inputmethods/hackerskeyboard",
+    "revision":    "linaro-master"
   }
 ]
