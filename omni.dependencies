@@ -48,6 +48,12 @@
     "revision":    "master"
   },
   {
+    "remote":      "trevd",
+    "repository":  "android_external_libparted",
+    "target_path": "external/libparted",
+    "revision":    "master"
+  },
+  {
     "remote":      "CyanogenMod",
     "repository":  "Superuser",
     "target_path": "external/koush/Superuser",
