@@ -88,7 +88,7 @@ SUPERUSER_PACKAGE_PREFIX := com.android.settings.cyanogenmod.superuser
 PRODUCT_CHARACTERISTICS := tablet
     
 # The SGS series is hdpi however with new development going toward xhdpi we need to inherit xhdpi or we will lose those pngs
-PRODUCT_AAPT_CONFIG := large mdpi hdpi xhdpi nodpi tvdpi
+PRODUCT_AAPT_CONFIG := normal large mdpi nodpi
 PRODUCT_AAPT_PREF_CONFIG := mdpi
 
 DEVICE_PACKAGE_OVERLAYS := \
