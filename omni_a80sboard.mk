@@ -16,11 +16,18 @@
 $(call inherit-product, device/archos/a80sboard/full_a80sboard.mk)
 
 # Inherit from our custom product configuration
-$(call inherit-product, vendor/omni/config/common.mk)
-$(call inherit-product, vendor/omni/config/gsm.mk)
+$(call inherit-product-if-exists, vendor/omni/config/common.mk)
+$(call inherit-product-if-exists, vendor/omni/config/gsm.mk)
 $(call inherit-product-if-exists, vendor/google/products/mini-gms.mk)
 
 PRODUCT_NAME := omni_a80sboard
 
 # Limit the language to english
 PRODUCT_LOCALES := en_GB en_US 
+
+# Add Google Apps and Services
+PRODUCT_PACKAGES += \
+	GoogleLoginService.apk \
+	GoogleServicesFramework.apk \
+	Phonesky.apk \
+	PrebuiltGmsCore.apk 
