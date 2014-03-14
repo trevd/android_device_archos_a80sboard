@@ -233,17 +233,16 @@ done:
     return StringValue(strdup(success > 0 ? "t" : ""));
 }
 
-Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
+Value* SetupPartitionsFn1(const char* name, State* state, int argc, Expr* argv[]) {
 
+        int success =1 ;
         printf("SetupPartitionsFn is called\n"); 
-        char* blkdevice;
-        struct stat blkdevice_stat;
-        int success = 0;
-
         if (argc != 1){
                 return ErrorAbort(state, "%s() expects 1 arg, got %d", name, argc);
         }
-
+        char* result= calloc(2,sizeof(char)); 
+        char* blkdevice;
+        
         if (ReadArgs(state, argv, 1, &blkdevice) != 0){
                 return NULL;
         }
@@ -255,7 +254,7 @@ Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[])
         }
                
 
-        PedDevice* device = ped_device_get (blkdevice);
+        PedDevice* device = ped_device_get(blkdevice);
         if (device == NULL){
                 ErrorAbort(state, "Parted cannot probe block device :%s\n",blkdevice);
                 goto abort_device;
@@ -283,24 +282,76 @@ Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[])
 
         }
         printf("size_value:%lu\n",size_value);
+        success = EOK;
         
+// Fall through the cleanup labels
+abort_size:     //free(size_string);
+abort_device:   //free(device);
+abort_arg:      //free(blkdevice);
+done:   
+        if(success == EOK){
+                return StringValue(strdup("t"));
+        }
+        return NULL;
         
-        
-
-        
-
-
-abort_size:
-        if(size_string) free(size_string);
-abort_device:
-        if(device) free(device);
-abort_arg:
-        if(blkdevice) free(blkdevice);
-done:
-
-        return StringValue(strdup(success > 0 ? "t" : ""));
 
 }
+Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
+        printf("SetupPartitionsFn is called\n"); 
+        if (argc != 1){
+                return ErrorAbort(state, "%s() expects 1 arg, got %d", name, argc);
+        }
+        char* blkdevice;
+        if (ReadArgs(state, argv, 1, &blkdevice) != 0){
+                return NULL;
+        }
+        // use parted to get the block device
+        if(strncmp("/dev/block/mmcblk",blkdevice,17) != EOK){
+                ErrorAbort(state, "unexpected block device path :%s\n",blkdevice);
+                goto abort_arg;
+        }
+        PedDevice* device = ped_device_get(blkdevice);
+        if (device == NULL){
+                ErrorAbort(state, "Parted cannot probe block device :%s\n",blkdevice);
+                goto abort_device;
+        }
+        printf("device:%s\n",blkdevice);
+        char* size_string = ped_unit_format_byte(device, device->length * device->sector_size);
+        if(size_string == NULL ) {
+                ErrorAbort(state, "Parted cannot get device size\n");
+                goto abort_device;
+        }
+        printf("size_string:%s\n",size_string);
+        // Expect a size string length of 6 in the format of 0000MB otherwise we'll bail
+        int size_string_length = strnlen(size_string,6);
+        free(size_string);
+        if(size_string_length != 6 ){
+                ErrorAbort(state, "Unexpected size string length %d\n",size_string_length);
+                goto abort_device;
+        }
+        printf("size_string_length:%d\n",size_string_length);
+        
+        unsigned long size_value = strtoul(size_string,NULL,10);
+        if((size_value < 7000) || (size_value > 8000)){
+                ErrorAbort(state, "Unexpected size value %lu \n",size_value);
+                goto abort_device;
+
+        }
+        printf("size_value:%lu\n",size_value);
+        int success = EOK;
+abort_device:
+        ped_device_destroy(device);
+abort_arg: 
+        free(blkdevice);
+        //fprintf(((UpdaterInfo*)(state->cookie))->cmd_pipe, "wipe_cache\n");
+         
+        if(success != EOK ){
+                return NULL;
+        }
+        return StringValue(strdup("t"));
+
+}
+//}
 void Register_librecovery_updater_a80sboard() {
     printf("Register_librecovery_updater_a80sboard is called\n");
     RegisterFunction("archos.mount_and_wipe", MountAndWipeFn);
