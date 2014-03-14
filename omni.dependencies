@@ -49,8 +49,8 @@
   },
   {
     "remote":      "trevd",
-    "repository":  "android_external_libparted",
-    "target_path": "external/libparted",
+    "repository":  "android_external_parted",
+    "target_path": "external/parted",
     "revision":    "master"
   },
   {
