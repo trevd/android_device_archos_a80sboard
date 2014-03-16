@@ -26,14 +26,9 @@
 #include "mounts.h"
 #include "edify/expr.h"
 
+// a couple of state define
 #define EOK 0
-
-struct MountedVolume {
-    const char *device;
-    const char *mount_point;
-    const char *filesystem;
-    const char *flags;
-};
+#define EFAIL 1
 
 extern Value* MountFn(const char* name, State* state, int argc, Expr* argv[]) ; 
 extern Value* IsMountedFn(const char* name, State* state, int argc, Expr* argv[]);
@@ -68,6 +63,7 @@ static inline int mount_rawfs(){
         printf("mounted: %s @ %s\n",MOUNT_LOCATION, RAWFS_MOUNT_POINT);
         return 0 ; 
 }
+
 // MountAndWipeFn(fs_type, partition_type, location, mount_point)
 // archos.mount_and_wipe replaces the default format and mount commands
 // We mount the selected partiton then perfoming a recursive delete.
@@ -75,45 +71,50 @@ static inline int mount_rawfs(){
 Value* MountAndWipeFn(const char* name, State* state, int argc, Expr* argv[]) {
         
         printf("MountAndWipeFn is called\n"); 
-            char* result = NULL;
-    if (argc != 4) {
-        return ErrorAbort(state, "%s() expects 4 args, got %d", name, argc);
-    }
+        char* result = NULL;
+        if (argc != 4) {
+                return ErrorAbort(state, "%s() expects 4 args, got %d", name, argc);
+        }
+        
         char* fs_type;
         char* partition_type;
         char* location;
         char* mount_point;
-        if (ReadArgs(state, argv, 4, &fs_type, &partition_type,
-                                 &location, &mount_point) < 0) {
+        
+        // Argument Parsing
+        if (ReadArgs(state, argv, 4, &fs_type, &partition_type,&location, &mount_point) < 0) {
                 return NULL;
         }
-            if (strlen(fs_type) == 0) {
-        ErrorAbort(state, "fs_type argument to %s() can't be empty", name);
-        goto done;
-    }
-    if (strlen(partition_type) == 0) {
-        ErrorAbort(state, "partition_type argument to %s() can't be empty",
-                   name);
-        goto done;
-    }
-    if (strlen(location) == 0) {
-        ErrorAbort(state, "location argument to %s() can't be empty", name);
-        goto done;
-    }
-    if (strlen(mount_point) == 0) {
-        ErrorAbort(state, "mount_point argument to %s() can't be empty", name);
-        goto done;
-    }
+        // Check the argument values are at least initialized.
+        if (strlen(fs_type) == 0) {
+                ErrorAbort(state, "fs_type argument to %s() can't be empty", name);
+                goto done;
+        }
+        if (strlen(partition_type) == 0) {
+                ErrorAbort(state, "partition_type argument to %s() can't be empty",name);
+                goto done;
+        }
+        if (strlen(location) == 0) {
+                ErrorAbort(state, "location argument to %s() can't be empty", name);
+                goto done;
+        }
+        if (strlen(mount_point) == 0) {
+                ErrorAbort(state, "mount_point argument to %s() can't be empty", name);
+                goto done;
+        }
 
-    char *secontext = NULL;
+        char *secontext = NULL;
 
-    if (sehandle) {
-        selabel_lookup(sehandle, &secontext, mount_point, 0755);
-        setfscreatecon(secontext);
-    }
+        // Are we running in an selinux enabled environment?
+        if (sehandle) {
+                selabel_lookup(sehandle, &secontext, mount_point, 0755);
+                setfscreatecon(secontext);
+        }
+        
         
         Expr* ismounted_argv[] = { argv[3] }; //  mount_point
         Value* ismountedfn = IsMountedFn("is_mounted",state,1, ismounted_argv );
+        
         Value* mountfn = NULL ;  
         printf("MountAndWipeFn :IsMountedFn is called\n"); 
         if((ismountedfn != NULL) && (strlen(ismountedfn->data) == 0)){
@@ -126,7 +127,7 @@ Value* MountAndWipeFn(const char* name, State* state, int argc, Expr* argv[]) {
                 
         }
         result = mount_point;
-   Value* deletefn  = DeleteFn("delete_recursive",state,1, ismounted_argv );
+        Value* deletefn  = DeleteFn("delete_recursive",state,1, ismounted_argv );
         
 done2: 
         if(mountfn)free(mountfn);
@@ -233,97 +234,48 @@ done:
     return StringValue(strdup(success > 0 ? "t" : ""));
 }
 
-Value* SetupPartitionsFn1(const char* name, State* state, int argc, Expr* argv[]) {
-
-        int success =1 ;
-        printf("SetupPartitionsFn is called\n"); 
-        if (argc != 1){
-                return ErrorAbort(state, "%s() expects 1 arg, got %d", name, argc);
-        }
-        char* result= calloc(2,sizeof(char)); 
-        char* blkdevice;
-        
-        if (ReadArgs(state, argv, 1, &blkdevice) != 0){
-                return NULL;
-        }
-
-        // use parted to get the block device
-        if(strncmp("/dev/block/mmcblk",blkdevice,17) != EOK){
-                ErrorAbort(state, "unexpected block device path :%s\n",blkdevice);
-                goto abort_arg;
-        }
-               
-
-        PedDevice* device = ped_device_get(blkdevice);
-        if (device == NULL){
-                ErrorAbort(state, "Parted cannot probe block device :%s\n",blkdevice);
-                goto abort_device;
-        }
-        printf("device:%s\n",blkdevice);
-
-        char* size_string = ped_unit_format_byte(device, device->length * device->sector_size);
-        if(size_string == NULL ) {
-                ErrorAbort(state, "Parted cannot get device size\n");
-                goto abort_device;
-        }
-        printf("size_string:%s\n",size_string);
-        // Expect a size string length of 6 in the format of 0000MB otherwise we'll bail
-        int size_string_length = strnlen(size_string,6);
-        if(size_string_length != 6 ){
-                ErrorAbort(state, "Unexpected size string length %d\n",size_string_length);
-                goto abort_size;
-        }
-        printf("size_string_length:%d\n",size_string_length);
-        
-        unsigned long size_value = strtoul(size_string,NULL,10);
-        if((size_value < 7000) || (size_value > 8000)){
-                ErrorAbort(state, "Unexpected size value %lu \n",size_value);
-                goto abort_size;
-
-        }
-        printf("size_value:%lu\n",size_value);
-        success = EOK;
-        
-// Fall through the cleanup labels
-abort_size:     //free(size_string);
-abort_device:   //free(device);
-abort_arg:      //free(blkdevice);
-done:   
-        if(success == EOK){
-                return StringValue(strdup("t"));
-        }
-        return NULL;
-        
-
-}
 Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[]) {
+        
         printf("SetupPartitionsFn is called\n"); 
+        
+        // Check argument count is valid
         if (argc != 1){
                 return ErrorAbort(state, "%s() expects 1 arg, got %d", name, argc);
         }
+        // Read args into variable
         char* blkdevice;
         if (ReadArgs(state, argv, 1, &blkdevice) != 0){
                 return NULL;
         }
-        // use parted to get the block device
+        int success = EFAIL;
+        // A bit of sanity checking on the input, never trust the client and all that!
         if(strncmp("/dev/block/mmcblk",blkdevice,17) != EOK){
                 ErrorAbort(state, "unexpected block device path :%s\n",blkdevice);
                 goto abort_arg;
         }
+        
+        // use parted to get the block device
         PedDevice* device = ped_device_get(blkdevice);
         if (device == NULL){
                 ErrorAbort(state, "Parted cannot probe block device :%s\n",blkdevice);
                 goto abort_device;
         }
         printf("device:%s\n",blkdevice);
+        
+        // Set default unit to megabytes so all size checks are in the right format 
+        ped_unit_set_default(PED_UNIT_MEGABYTE);
+        
+        // get the block device size
         char* size_string = ped_unit_format_byte(device, device->length * device->sector_size);
         if(size_string == NULL ) {
                 ErrorAbort(state, "Parted cannot get device size\n");
                 goto abort_device;
         }
         printf("size_string:%s\n",size_string);
+        
         // Expect a size string length of 6 in the format of 0000MB otherwise we'll bail
-        int size_string_length = strnlen(size_string,6);
+        // Count strlen+1 as that is all we need to check to determine validity
+        int size_string_length = strnlen(size_string,7);
         free(size_string);
         if(size_string_length != 6 ){
                 ErrorAbort(state, "Unexpected size string length %d\n",size_string_length);
@@ -331,14 +283,33 @@ Value* SetupPartitionsFn(const char* name, State* state, int argc, Expr* argv[])
         }
         printf("size_string_length:%d\n",size_string_length);
         
+        // We are expecting an sdcard size of ~7500MB. Check between 7GB and 8GB
+        // as not all sdcards maybe the same.
         unsigned long size_value = strtoul(size_string,NULL,10);
         if((size_value < 7000) || (size_value > 8000)){
-                ErrorAbort(state, "Unexpected size value %lu \n",size_value);
+                ErrorAbort(state, "Unexpected size value %lu\n",size_value);
                 goto abort_device;
-
         }
         printf("size_value:%lu\n",size_value);
-        int success = EOK;
+        
+        // Get the disk info
+        PedDisk* disk = ped_disk_new (device);
+        if(disk == NULL){
+                ErrorAbort(state, "Parted cannot get disk info for :%s\n",blkdevice);
+                goto abort_device;
+        }
+        PedPartition* part = NULL;
+        do{
+                part = ped_disk_next_partition (disk, part);
+                if ((part != NULL) && (part->num >= 0)){
+                        printf("%d %s %s\n",part->num,ped_partition_type_get_name(part->type),ped_unit_format (device,part->geom.length));
+                }        
+        }while( part != NULL );
+                
+        
+        success = EOK;
+abort_disk:
+        ped_disk_destroy(disk);
 abort_device:
         ped_device_destroy(device);
 abort_arg: 
