@@ -76,5 +76,11 @@
     "repository":  "platform/packages/inputmethods/hackerskeyboard",
     "target_path": "packages/inputmethods/hackerskeyboard",
     "revision":    "linaro-master"
+  },
+  {
+    "remote":      "linaro",
+    "repository":  "platform/external/AndroidTerm",
+    "target_path": "packages/packages/apps/AndroidTerm",
+    "revision":    "linaro-master"
   }
 ]
