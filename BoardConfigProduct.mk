@@ -48,6 +48,6 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS
 
 #BOARD_HAVE_OLD_ION_API := true
 
-BOARD_CUSTOM_BOOTIMG_MK := device/archos/a80sboard/mkbootimg/cm.mk
+#BOARD_CUSTOM_BOOTIMG_MK := device/archos/a80sboard/mkbootimg/cm.mk
 
 endif
