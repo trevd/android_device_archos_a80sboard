@@ -44,7 +44,7 @@ TARGET_RECOVERY_FSTAB = device/archos/a80sboard/fstab.archosa80sboard
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8379728
 
 # Use a custom mkbootimg to create an archos friendly file
-BOARD_CUSTOM_MKBOOTIMG := out/host/$(HOST_OS)-$(HOST_ARCH)/bin/mkbootimg-a80sboard$(HOST_EXECUTABLE_SUFFIX)
+BOARD_CUSTOM_MKBOOTIMG := $(HOST_OUT)/bin/mkbootimg-a80sboard$(HOST_EXECUTABLE_SUFFIX)
 
 TARGET_USERIMAGES_USE_EXT4 := true
 # System Partition is 800MB ( 838860800 bytes )

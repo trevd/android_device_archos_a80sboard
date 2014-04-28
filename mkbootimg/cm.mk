@@ -1,4 +1,4 @@
-ifeq ($(TARGET_PRODUCT),cm_a80sboard)
+#ifeq ($(TARGET_PRODUCT),cm_a80sboard)
 $(info "CM.MK BOARD_CUSTOM_MKBOOTIMG $(BOARD_CUSTOM_MKBOOTIMG)")
 $(INSTALLED_BOOTIMAGE_TARGET): $(BOARD_CUSTOM_MKBOOTIMG) $(INTERNAL_BOOTIMAGE_FILES)
 	$(call pretty,"Target boot image: $@")
@@ -13,4 +13,4 @@ $(INSTALLED_RECOVERYIMAGE_TARGET): $(BOARD_CUSTOM_MKBOOTIMG) \
 	$(hide) $(BOARD_CUSTOM_MKBOOTIMG) $(INTERNAL_RECOVERYIMAGE_ARGS) $(BOARD_MKBOOTIMG_ARGS) --output $@
 	$(hide) $(call assert-max-image-size,$@,$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
 	@echo -e ${CL_CYN}"Made recovery image: $@"${CL_RST}
-endif
+#endif
